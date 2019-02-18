@@ -44,11 +44,18 @@ func (t *CC) testGetID(stub shim.ChaincodeStubInterface, args []string) pb.Respo
 	
 	if found {
 		fmt.Println("attribute value found; value = ", attrValue)
-		} else {
-			fmt.Println("attribute value not found")
-		}
+	} else {
+		fmt.Println("attribute value not found")
+	}
 		
-		return shim.Success(nil)
+	x509cert, err := cid.GetX509Certificate(stub)
+	if err != nil {
+		fmt.Println("unable to get certificate ", err)
+		return shim.Error(err.Error())
+	}
+	fmt.Println("Subject ", x509cert.Subject)
+	fmt.Println("Issuer ", x509cert.Issuer)
+	return shim.Success(nil)
 }
 	
 func (t *CC) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
