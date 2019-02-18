@@ -5,7 +5,7 @@ Some experiments with chaincode CID to get client identity and attributes.
 
 ## Some notes
 
-- MockStub allows setting `Creator` to specify Client identity at this commit `93f8353378b5fb7f879b6ce0c1ead127a1cdcf8e` (beyond `v1.4.0`). Hence for unit testing we have to use this commit onwards in `go.mod`
+- MockStub allows setting `Creator` to specify Client identity at this commit `93f8353378b5fb7f879b6ce0c1ead127a1cdcf8e` (beyond `v1.4.0`). Hence for unit testing we have to use Fabric at this commit onwards in `go.mod`
 
 - See the output of test logs to know how the output of `GetID, GetMSPID, GetAttributeValue()` unit tests look like https://travis-ci.org/alext234/test-chaincode-identity
 
