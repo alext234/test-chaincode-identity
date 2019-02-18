@@ -1,6 +1,9 @@
 package main
 
 import (
+	"crypto/ecdsa"
+	"reflect"
+	"encoding/hex"
 	"fmt"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	"github.com/hyperledger/fabric/core/chaincode/shim/ext/cid"
@@ -25,6 +28,7 @@ func (t *CC) testGetID(stub shim.ChaincodeStubInterface, args []string) pb.Respo
 		return shim.Error(err.Error())
 	}
 	fmt.Println("invokeID = ", invokeID)
+	fmt.Println(hex.Dump([]byte(invokeID)))
 	
 	
 	
@@ -55,6 +59,17 @@ func (t *CC) testGetID(stub shim.ChaincodeStubInterface, args []string) pb.Respo
 	}
 	fmt.Println("Subject ", x509cert.Subject)
 	fmt.Println("Issuer ", x509cert.Issuer)
+
+	fmt.Println("PublicKey type = ", reflect.TypeOf(x509cert.PublicKey))
+	publicKey,_   := x509cert.PublicKey.(*ecdsa.PublicKey)
+	fmt.Println("PublicKey bytes ")
+	fmt.Println(hex.Dump(publicKey.X.Bytes()))
+	fmt.Println(hex.Dump(publicKey.Y.Bytes()))
+	fmt.Println("RawSubjectPublicKeyInfo ")
+	fmt.Println( hex.Dump(x509cert.RawSubjectPublicKeyInfo))
+	fmt.Println("SubjectKeyId")
+	
+	fmt.Println( hex.Dump(x509cert.SubjectKeyId))
 	return shim.Success(nil)
 }
 	
