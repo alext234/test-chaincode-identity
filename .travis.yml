@@ -1,0 +1,25 @@
+language: go
+sudo: false
+go:
+- 1.11.2
+script:
+- echo "run unit tests"
+- make test
+
+before_deploy:
+    - echo "build app binaries"
+    - make app-linux
+    - make app-mac
+    - ls
+
+deploy:
+  provider: releases
+  api_key:
+    secure: rn6C8T62HBavcX2nVWtSc806GcRvloODZJu5d0/gZMyI/K0hBr7Pi035truAgG9Pcbj4RgplaRfkTmZXhjS/gdl0oKoYmJ7Z2Ef0jyY4e7FEuDDoYVd34skIea2X75g9k8sXd2rIjwkR+tsDuFpP+UwzCzgjhEJjodKoycmo7O0qQQXoM1I1LbGYBdrnPzzmG++rmZ8p74UWAJqQofWrTvcrd6gTE8lPGaO20dHEX3UoOCjomCIzsqFftjeIYASdk5qnxML0p4PkAMX3PM0tahdgvYW6na5BjPl/NsmAA4iZvqtX0XVM9moEKITMa9i31Sd3wsr4KR2x+rec3F1uOH12gNVAzIe0T7g2I48B6gdsAWsc1kTM6SMPPejGlFBMq1W+nE2HX+gDUJZ2rN/m/dQtmHglZmakAmewGnQhEwLi1VC2qVpFWon8zfgw4Ktv6Kka+j5eYBhjaCAegH193CQfTD7Ue6e2gUiOjbFfg+bs2sPH8Ug8SK80ntBHNbhpVa5oVS1SmRQyQPpFGAElaUB21dnJ4c7v7lkIsSSHPl0Tx5vyuGtna0L9xWpmFwbUwp5m8Q62ef/y7hfpbhPWkjdKr7VPxKC0rLwhmph6PF3QYXuLVxQZFzxXEA35+K3fmSErZc2C1eXH1/rgLCmIPGijqohxt8baVa8H5buPENE=
+  file: 
+    - parameters-util-linux
+    - parameters-util-mac
+  skip_cleanup: true
+  on:
+    repo: alext234/parameters-util
+    tags: true
